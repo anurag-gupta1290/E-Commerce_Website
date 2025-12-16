@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - GUPTA CLOTHE STORE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #6d28d9;
+      --primary-light: #8b5cf6;
+      --secondary: #10b981;
+      --dark: #1e293b;
+      --light: #f8fafc;
+      --gray: #94a3b8;
+      --danger: #ef4444;
+      --success: #22c55e;
+      --warning: #f59e0b;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: #f5f3ff;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      padding: 1rem 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: white;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+    
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+    
+    .nav-links a:hover {
+      opacity: 0.9;
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: white;
+      transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    
+    .auth-container {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: calc(100vh - 200px);
+    }
+    
+    .auth-card {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      width: 100%;
+      max-width: 450px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .auth-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    }
+    
+    .auth-header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    
+    .auth-header h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .auth-header p {
+      opacity: 0.9;
+      font-size: 0.9rem;
+    }
+    
+    .auth-body {
+      padding: 2rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--dark);
+    }
+    
+    .input-group {
+      position: relative;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      padding-right: 40px;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(107, 70, 193, 0.2);
+    }
+    
+    .input-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+      cursor: pointer;
+    }
+    
+    .password-requirements {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+    
+    .requirement {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.3rem;
+    }
+    
+    .requirement i {
+      margin-right: 0.5rem;
+      font-size: 0.7rem;
+    }
+    
+    .requirement.valid {
+      color: var(--success);
+    }
+    
+    .requirement.invalid {
+      color: var(--gray);
+    }
+    
+    .password-strength {
+      height: 4px;
+      background-color: #eee;
+      border-radius: 2px;
+      margin-top: 0.5rem;
+      overflow: hidden;
+    }
+    
+    .strength-meter {
+      height: 100%;
+      width: 0;
+      background-color: var(--danger);
+      transition: width 0.3s ease, background-color 0.3s ease;
+    }
+    
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      margin-bottom: 1.5rem;
+    }
+    
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--primary-light), var(--primary)));
+      box-shadow: 0 5px 15px rgba(107, 70, 193, 0.4);
+      transform: translateY(-2px);
+    }
+    
+    .btn-primary:disabled {
+      background: var(--gray);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .auth-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+    
+    .auth-footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    
+    .auth-footer a:hover {
+      color: var(--primary-light);
+      text-decoration: underline;
+    }
+    
+    footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 2rem 0;
+      margin-top: 3rem;
+      text-align: center;
+    }
+    
+    footer p {
+      color: var(--gray);
+    }
+    
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        padding: 1rem;
+      }
+      
+      .nav-links {
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .auth-container {
+        padding: 0 1rem;
+        margin: 2rem auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+<header>
+  <nav class="navbar">
+    <div class="logo">WELCOME TO OUR GUPTA CLOTHE STORE!</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="signin.html">Sign In</a></li>
+      <li><a href="signup.html">Sign Up</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h1>Create Your Account</h1>
+      <p>Join our community and enjoy personalized shopping experiences</p>
+    </div>
+    
+    <div class="auth-body">
+      <form id="signupForm">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <div class="input-group">
+            <input type="text" id="username" class="form-control" placeholder="Choose a username" required>
+            <i class="fas fa-user input-icon"></i>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <div class="input-group">
+            <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+            <i class="fas fa-envelope input-icon"></i>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-group">
+            <input type="password" id="password" class="form-control" placeholder="Create a password" required>
+            <i class="fas fa-eye input-icon" id="togglePassword"></i>
+          </div>
+          <div class="password-strength">
+            <div class="strength-meter" id="passwordStrength"></div>
+          </div>
+          <div class="password-requirements">
+            <div class="requirement invalid" id="lengthReq">
+              <i class="fas fa-circle"></i> At least 8 characters
+            </div>
+            <div class="requirement invalid" id="uppercaseReq">
+              <i class="fas fa-circle"></i> At least 1 uppercase letter
+            </div>
+            <div class="requirement invalid" id="numberReq">
+              <i class="fas fa-circle"></i> At least 1 number
+            </div>
+            <div class="requirement invalid" id="specialReq">
+              <i class="fas fa-circle"></i> At least 1 special character
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <div class="input-group">
+            <input type="password" id="confirmPassword" class="form-control" placeholder="Re-enter your password" required>
+            <i class="fas fa-eye input-icon" id="toggleConfirmPassword"></i>
+          </div>
+          <small id="passwordMatchError" style="color: var(--danger); display: none;">Passwords do not match</small>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" id="signupBtn" disabled>Create Account</button>
+        
+        <div class="auth-footer">
+          Already have an account? <a href="signin.html">Sign in here</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2025 GUPTA CLOTHE STORE. All rights reserved.</p>
+</footer>
+
+<script>
+  // Toggle password visibility
+  const togglePassword = document.getElementById('togglePassword');
+  const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+  const passwordInput = document.getElementById('password');
+  const confirmPasswordInput = document.getElementById('confirmPassword');
+  
+  togglePassword.addEventListener('click', function() {
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+    this.classList.toggle('fa-eye-slash');
+  });
+  
+  toggleConfirmPassword.addEventListener('click', function() {
+    const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    confirmPasswordInput.setAttribute('type', type);
+    this.classList.toggle('fa-eye-slash');
+  });
+  
+  // Password validation
+  passwordInput.addEventListener('input', function() {
+    const password = this.value;
+    const strengthMeter = document.getElementById('passwordStrength');
+    const signupBtn = document.getElementById('signupBtn');
+    
+    // Check password requirements
+    const hasMinLength = password.length >= 8;
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[^A-Za-z0-9]/.test(password);
+    
+    // Update requirement indicators
+    updateRequirement('lengthReq', hasMinLength);
+    updateRequirement('uppercaseReq', hasUppercase);
+    updateRequirement('numberReq', hasNumber);
+    updateRequirement('specialReq', hasSpecialChar);
+    
+    // Calculate strength
+    let strength = 0;
+    if (hasMinLength) strength += 25;
+    if (hasUppercase) strength += 25;
+    if (hasNumber) strength += 25;
+    if (hasSpecialChar) strength += 25;
+    
+    // Update strength meter
+    strengthMeter.style.width = strength + '%';
+    
+    if (strength <= 25) {
+      strengthMeter.style.backgroundColor = 'var(--danger)';
+    } else if (strength <= 75) {
+      strengthMeter.style.backgroundColor = 'var(--warning)';
+    } else {
+      strengthMeter.style.backgroundColor = 'var(--success)';
+    }
+    
+    // Check if all requirements are met
+    const allRequirementsMet = hasMinLength && hasUppercase && hasNumber && hasSpecialChar;
+    
+    // Check if passwords match
+    const passwordsMatch = password === confirmPasswordInput.value;
+    
+    // Enable/disable signup button
+    signupBtn.disabled = !(allRequirementsMet && passwordsMatch);
+  });
+  
+  // Confirm password validation
+  confirmPasswordInput.addEventListener('input', function() {
+    const password = passwordInput.value;
+    const confirmPassword = this.value;
+    const passwordMatchError = document.getElementById('passwordMatchError');
+    const signupBtn = document.getElementById('signupBtn');
+    
+    if (confirmPassword && password !== confirmPassword) {
+      passwordMatchError.style.display = 'block';
+      signupBtn.disabled = true;
+    } else {
+      passwordMatchError.style.display = 'none';
+      
+      // Check if all password requirements are met
+      const hasMinLength = password.length >= 8;
+      const hasUppercase = /[A-Z]/.test(password);
+      const hasNumber = /[0-9]/.test(password);
+      const hasSpecialChar = /[^A-Za-z0-9]/.test(password);
+      const allRequirementsMet = hasMinLength && hasUppercase && hasNumber && hasSpecialChar;
+      
+      signupBtn.disabled = !(allRequirementsMet && password === confirmPassword);
+    }
+  });
+  
+  function updateRequirement(id, isValid) {
+    const element = document.getElementById(id);
+    if (isValid) {
+      element.classList.remove('invalid');
+      element.classList.add('valid');
+      element.querySelector('i').className = 'fas fa-check-circle';
+    } else {
+      element.classList.remove('valid');
+      element.classList.add('invalid');
+      element.querySelector('i').className = 'fas fa-circle';
+    }
+  }
+  
+  // Form submission
+  document.getElementById('signupForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const username = document.getElementById('username').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    
+    // In a real app, you would send this to your server for registration
+    console.log('Sign up attempt:', { username, email, password });
+    
+    // Store in localStorage for demo purposes (not secure for production)
+    localStorage.setItem('signupUsername', username);
+    localStorage.setItem('signupEmail', email);
+    localStorage.setItem('signupPassword', password);
+    
+    // Show success message
+    alert(`Welcome ${username}! Your account has been created successfully.`);
+    
+    // Redirect to account page or home page
+    window.location.href = 'signin.html';
+  });
+</script>
+
+</body>
+</html>
